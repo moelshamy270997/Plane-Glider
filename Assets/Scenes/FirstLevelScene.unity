@@ -2031,7 +2031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef126c8d93bbcfa42a74904c83394403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p: {fileID: 0}
+  p: {fileID: 158729516}
   maxFuel: 100
   fuelDepletionRate: 10
   fuelText: {fileID: 443044027}

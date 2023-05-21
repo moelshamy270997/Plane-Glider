@@ -11,7 +11,7 @@ public class PlaneScript : MonoBehaviour
     bool movingUp = false;
 
     public bool collied = false;
-
+    float rotationSpeed = 2f;
     LevelOneAudioScript levelOneAudioScript;
 
 
@@ -66,12 +66,17 @@ public class PlaneScript : MonoBehaviour
             rb.AddForce(Vector2.up * 10f, ForceMode2D.Force);
             // rb.velocity = new Vector2(0.1f, 0.2f);
             // TorqueUp(3f);
+            transform.rotation = Quaternion.Euler(0f, 0f, 38f);
         }
         else
         {
             rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
+            transform.rotation = Quaternion.Euler(0f, 0f, -38);
             // TorqueDown(-3f);
         }
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -5, 12.11f);
+        transform.position = clampedPosition;
         /*
         if (!movingUp && rb.angularVelocity > -10f)
         {
@@ -82,7 +87,7 @@ public class PlaneScript : MonoBehaviour
 
         }
         */
-        
+
 
         // rb.AddForce(Vector2.up * 0.5f);
         // rb.AddTorque(-5f);
@@ -119,18 +124,7 @@ public class PlaneScript : MonoBehaviour
         }
     }
 
-    
-    void TorqueUp(float value)
-    {
-        if (gameObject.transform.localEulerAngles.z < 20f)
-            rb.AddTorque(value);
-    }
 
-    void TorqueDown(float value)
-    {
-        if (gameObject.transform.localEulerAngles.z > -20f)
-            rb.AddTorque(value);
-    }
 
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -168,7 +162,7 @@ public class PlaneScript : MonoBehaviour
         }
     }
 
-    void GameOverFunction()
+    public void GameOverFunction()
     {
         rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
     }

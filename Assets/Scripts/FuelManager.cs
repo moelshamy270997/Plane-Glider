@@ -38,8 +38,10 @@ public class FuelManager : MonoBehaviour
         // Update the fuel text
         if (currentFuel <= 0f)
         {
+            
+            fuelText.fontSize = 24;
             fuelText.text = "Empty";
-
+            p.GameOverFunction();
 
         }
         else
