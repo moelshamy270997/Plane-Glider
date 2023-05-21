@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlaneScript : MonoBehaviour
 {
     Rigidbody2D rb;
+    float fuelAmount = 20f;
     bool movingUp = false;
+    public bool collied = false;
 
     private bool gameOver = false;
     public bool GameOver
@@ -19,7 +21,7 @@ public class PlaneScript : MonoBehaviour
         get { return cameraFollow; }
         set { cameraFollow = value; }
     }
-
+    FuelManager fuelGauge;
 
     void Start()
     {
@@ -142,11 +144,18 @@ public class PlaneScript : MonoBehaviour
         if (collision.CompareTag("PowerUp"))
         {
             // TODO: Power UP
+            fuelGauge = FindObjectOfType<FuelManager>();
+            fuelGauge.RestoreFuel(fuelAmount);
+            collision.gameObject.SetActive(false);
         }
     }
 
     void GameOverFunction()
     {
         rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
+    }
+    public bool isBoosting()
+    {
+        return movingUp;
     }
 }
