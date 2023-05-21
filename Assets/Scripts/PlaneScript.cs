@@ -5,8 +5,13 @@ using UnityEngine;
 public class PlaneScript : MonoBehaviour
 {
     Rigidbody2D rb;
+    float fuelAmount = 20f;
     bool movingUp = false;
+
+    public bool collied = false;
+
     LevelOneAudioScript levelOneAudioScript;
+
 
     private bool gameOver = false;
     public bool GameOver
@@ -21,10 +26,14 @@ public class PlaneScript : MonoBehaviour
         set { cameraFollow = value; }
     }
 
+    FuelManager fuelGauge;
+
+
     private void Awake()
     {
         levelOneAudioScript = GameObject.Find("AudioObject").GetComponent<LevelOneAudioScript>();
     }
+
 
     void Start()
     {
@@ -149,6 +158,9 @@ public class PlaneScript : MonoBehaviour
         if (collision.CompareTag("PowerUp"))
         {
             // TODO: Power UP
+            fuelGauge = FindObjectOfType<FuelManager>();
+            fuelGauge.RestoreFuel(fuelAmount);
+            collision.gameObject.SetActive(false);
         }
 
         if (collision.CompareTag("End"))
@@ -160,5 +172,9 @@ public class PlaneScript : MonoBehaviour
     void GameOverFunction()
     {
         rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
+    }
+    public bool isBoosting()
+    {
+        return movingUp;
     }
 }

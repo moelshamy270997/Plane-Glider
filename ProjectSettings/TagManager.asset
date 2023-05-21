@@ -7,7 +7,13 @@ TagManager:
   - Ground
   - Obstacle
   - Animal
+
+  - Text
+  - Image
+  - PowerUp
+
   - End
+
   layers:
   - Default
   - TransparentFX
@@ -47,4 +53,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3791264263
+    locked: 0
+  - name: Text
+    uniqueID: 3442662587
+    locked: 0
+  - name: Image
+    uniqueID: 2570374879
     locked: 0

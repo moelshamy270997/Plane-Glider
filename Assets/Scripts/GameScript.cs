@@ -8,6 +8,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] Canvas canvas;
     List<GameObject> groundObjects = new List<GameObject>();
     GameObject[] obstaclesObjects;
+    GameObject[] FuelObjects;
 
     float speed = 2f;
 
@@ -22,6 +23,7 @@ public class GameScript : MonoBehaviour
     {
         GameSetUp();
         obstaclesObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+        FuelObjects = GameObject.FindGameObjectsWithTag("PowerUp");
     }
 
 
@@ -29,6 +31,7 @@ public class GameScript : MonoBehaviour
     {
         GroundMovement();
         ObstacleMovement();
+        FuelMovement();
     }
 
     void GameSetUp()
@@ -51,6 +54,12 @@ public class GameScript : MonoBehaviour
     void ObstacleMovement()
     {
         foreach (GameObject obj in obstaclesObjects)
+            obj.transform.Translate(Vector3.left * speed * Time.deltaTime);
+    }
+
+    void FuelMovement()
+    {
+        foreach (GameObject obj in FuelObjects)
             obj.transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 }
