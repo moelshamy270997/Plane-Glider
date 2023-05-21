@@ -4,17 +4,53 @@ using UnityEngine;
 
 public class GameScript : MonoBehaviour
 {
-    [SerializeField] GameObject plane;
+    [SerializeField] GameObject groundPrefab;
+    [SerializeField] Canvas canvas;
+    List<GameObject> groundObjects = new List<GameObject>();
+    GameObject[] obstaclesObjects;
 
-    // Start is called before the first frame update
-    void Start()
+    float speed = 2f;
+
+    // PlaneScript planeScript;
+
+    private void Awake()
     {
-        
+        // planeScript = FindObjectOfType<PlaneScript>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        GameSetUp();
+        obstaclesObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+    }
+
+
     void Update()
     {
-        // if (plane.transform.position.x)
+        GroundMovement();
+        ObstacleMovement();
+    }
+
+    void GameSetUp()
+    {
+        // Create the Game Ground dynamically
+        for (int i = 0; i < 8; i++)
+        {
+            GameObject obj = Instantiate(groundPrefab, new Vector3(807f * groundObjects.Count, -200f, -10f), Quaternion.identity);
+            groundObjects.Add(obj);
+            obj.transform.SetParent(canvas.transform, false);
+        }
+    }
+
+    void GroundMovement()
+    {
+        foreach (GameObject obj in groundObjects)
+            obj.transform.Translate(Vector3.left * speed * Time.deltaTime);
+    }
+
+    void ObstacleMovement()
+    {
+        foreach (GameObject obj in obstaclesObjects)
+            obj.transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 }

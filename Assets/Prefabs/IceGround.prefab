@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 9166629983965083926}
   - component: {fileID: 4001266250959351101}
   m_Layer: 5
-  m_Name: Ground
+  m_Name: IceGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 688b7cc64c7608b49b494a2ab7616cdc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 371653497bb1f81469c64b235fed2f3d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

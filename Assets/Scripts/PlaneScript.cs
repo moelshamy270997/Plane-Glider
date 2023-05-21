@@ -4,28 +4,32 @@ using UnityEngine;
 
 public class PlaneScript : MonoBehaviour
 {
-    // float speed = 0.5f;
-
     Rigidbody2D rb;
-    [SerializeField] GameObject prefab;
-    [SerializeField] Canvas canvas;
     bool movingUp = false;
 
-    // Vector3 torque = new Vector3(0f, torqueStrength, 0f);
+    private bool gameOver = false;
+    public bool GameOver
+    {
+        get { return gameOver; }
+        set { gameOver = value; }
+    }
+    private bool cameraFollow = false;
+    public bool CameraFollow
+    {
+        get { return cameraFollow; }
+        set { cameraFollow = value; }
+    }
+
 
     void Start()
     {
-        // StartCoroutine(SpawnObjects());
-
         rb = gameObject.GetComponent<Rigidbody2D>();
-
-        // rb.AddForce(Vector2.up * 1f);
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
-
+        // rb.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
+        /*
         if (movingUp)
         {
             // Debug.Log(Camera.main.ViewportToWorldPoint(Vector2.one).y + "  " + gameObject.transform.position.y);
@@ -40,24 +44,29 @@ public class PlaneScript : MonoBehaviour
         {
             // rb.AddForce(new Vector2(0f, -2f), ForceMode2D.Impulse);
         }
-        /*
+        */
         if (movingUp)
         {
-            rb.AddForce(Vector2.up * 2f);
-            rb.velocity = new Vector2(0.1f, 0.2f);
-            rb.AddTorque(3f);
+            rb.AddForce(Vector2.up * 10f, ForceMode2D.Force);
+            // rb.velocity = new Vector2(0.1f, 0.2f);
+            // TorqueUp(3f);
         }
-        
+        else
+        {
+            rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
+            // TorqueDown(-3f);
+        }
+        /*
         if (!movingUp && rb.angularVelocity > -10f)
         {
-            rb.angularVelocity = -15f;
+            // rb.angularVelocity = -15f;
             // rb.AddForce(Vector2.down * 1f);
             // rb.AddTorque(-3f);
             // rb.AddTorque(-15f);
-            Debug.Log(rb.angularVelocity);
 
         }
         */
+        
 
         // rb.AddForce(Vector2.up * 0.5f);
         // rb.AddTorque(-5f);
@@ -65,28 +74,50 @@ public class PlaneScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            movingUp = true;
-            // Torque(5f);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            movingUp = false;
-        }
-    }
-
-    void Torque(float value)
     {
-        // Debug.Log(gameObject.transform.localEulerAngles.z);
-        // if (value > 0f && gameObject.transform.localEulerAngles.z < 30f)
-        // rb.AddTorque(value);
-        // else // if (value < 0f && gameObject.transform.localEulerAngles.z > -30f)
-        // rb.AddTorque(value);
+        if (!gameOver)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                movingUp = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                movingUp = false;
+            }
+        }
+        else
+        {
+            // TODO: Start new Game
+            if (Input.GetKey(KeyCode.Space))
+            {
+
+            }
+        }
+
+        // TODO: Reset and move to main Scene
+        if (Input.GetKey(KeyCode.R))
+        {
+
+        }
     }
 
+    
+    void TorqueUp(float value)
+    {
+        if (gameObject.transform.localEulerAngles.z < 20f)
+            rb.AddTorque(value);
+    }
+
+    void TorqueDown(float value)
+    {
+        if (gameObject.transform.localEulerAngles.z > -20f)
+            rb.AddTorque(value);
+    }
+
+
+    /*
     IEnumerator SpawnObjects()
     {
         while (true)
@@ -95,5 +126,23 @@ public class PlaneScript : MonoBehaviour
             spawnedObject.transform.SetParent(canvas.transform, false);
             yield return new WaitForSeconds(2f); // Wait for 2 seconds before spawning the next object
         }
+    }
+    */
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Obstacle") || collision.CompareTag("Ground") || collision.CompareTag("Animal"))
+        {
+            Debug.Log("Collision");
+            // cameraFollow = true;
+            rb.gravityScale = 1f;
+            gameOver = true;
+            GameOverFunction();
+        }
+    }
+
+    void GameOverFunction()
+    {
+        rb.AddForce(Vector2.down * 10f, ForceMode2D.Force);
     }
 }

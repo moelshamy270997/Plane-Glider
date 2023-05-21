@@ -5,11 +5,11 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] GameObject plane;
-    // private PlaneScript planeScript;
+    PlaneScript planeScript;
 
     private void Awake()
     {
-        // planeScript = FindObjectOfType<PlaneScript>();
+        planeScript = FindObjectOfType<PlaneScript>();
     }
 
     void Start()
@@ -24,12 +24,19 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
+        if (planeScript.CameraFollow)
+        {
+            // Vector3 objectPosition = plane.transform.position;
+            // Vector3 objectWorldPosition = Camera.main.ScreenToWorldPoint(objectPosition);
+            // transform.position = new Vector3(objectWorldPosition.x, 0f, -10f);
+            // transform.position = new Vector3(plane.transform.position.x, 0f, Camera.main.transform.position.z);
+        }
         // Debug.Log(plane.transform.position.x);
         // Vector3 objectPosition = plane.transform.position;
         // Vector3 objectWorldPosition = Camera.main.ScreenToWorldPoint(objectPosition);
         // Debug.Log(objectWorldPosition.x + "\t" + gameObject.transform.position.x);
         // transform.position = new Vector3(objectWorldPosition.x, 0f, -10f);
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + 1f, 0f, Camera.main.transform.position.z);
+        // Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + 1f, 0f, Camera.main.transform.position.z);
     }
 
 }
