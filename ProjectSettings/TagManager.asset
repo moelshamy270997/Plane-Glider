@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Obstacle
   - Animal
+  - End
   layers:
   - Default
   - TransparentFX

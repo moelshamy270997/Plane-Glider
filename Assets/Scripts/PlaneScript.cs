@@ -6,6 +6,7 @@ public class PlaneScript : MonoBehaviour
 {
     Rigidbody2D rb;
     bool movingUp = false;
+    LevelOneAudioScript levelOneAudioScript;
 
     private bool gameOver = false;
     public bool GameOver
@@ -20,6 +21,10 @@ public class PlaneScript : MonoBehaviour
         set { cameraFollow = value; }
     }
 
+    private void Awake()
+    {
+        levelOneAudioScript = GameObject.Find("AudioObject").GetComponent<LevelOneAudioScript>();
+    }
 
     void Start()
     {
@@ -79,6 +84,7 @@ public class PlaneScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                levelOneAudioScript.PlayJumpSFX();
                 movingUp = true;
             }
 
@@ -133,6 +139,7 @@ public class PlaneScript : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle") || collision.CompareTag("Ground") || collision.CompareTag("Animal"))
         {
+            levelOneAudioScript.PlayHitFX();
             Debug.Log("Collision");
             // cameraFollow = true;
             rb.gravityScale = 1f;
@@ -142,6 +149,11 @@ public class PlaneScript : MonoBehaviour
         if (collision.CompareTag("PowerUp"))
         {
             // TODO: Power UP
+        }
+
+        if (collision.CompareTag("End"))
+        {
+            // TODO: Player Won the Game
         }
     }
 
