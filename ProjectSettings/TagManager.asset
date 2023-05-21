@@ -7,9 +7,13 @@ TagManager:
   - Ground
   - Obstacle
   - Animal
+
   - Text
   - Image
   - PowerUp
+
+  - End
+
   layers:
   - Default
   - TransparentFX
