@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class PlaneScript : MonoBehaviour
 {
@@ -105,16 +107,15 @@ public class PlaneScript : MonoBehaviour
         else
         {
             // TODO: Start new Game
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
             }
         }
 
-        // TODO: Reset and move to main Scene
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-
+            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
         }
     }
 
@@ -132,40 +133,38 @@ public class PlaneScript : MonoBehaviour
     }
 
 
-    /*
-    IEnumerator SpawnObjects()
-    {
-        while (true)
-        {
-            GameObject spawnedObject = Instantiate(prefab, new Vector3(gameObject.transform.position.x, -200f, -10f), Quaternion.identity);
-            spawnedObject.transform.SetParent(canvas.transform, false);
-            yield return new WaitForSeconds(2f); // Wait for 2 seconds before spawning the next object
-        }
-    }
-    */
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Obstacle") || collision.CompareTag("Ground") || collision.CompareTag("Animal"))
+        if (collision.CompareTag("Obstacle") || collision.CompareTag("Animal"))
         {
-            levelOneAudioScript.PlayHitFX();
-            Debug.Log("Collision");
-            // cameraFollow = true;
-            rb.gravityScale = 1f;
+            levelOneAudioScript.PlayHitSFX();
+            // rb.gravityScale = 1f;
             gameOver = true;
             GameOverFunction();
         }
         if (collision.CompareTag("PowerUp"))
         {
-            // TODO: Power UP
             fuelGauge = FindObjectOfType<FuelManager>();
             fuelGauge.RestoreFuel(fuelAmount);
             collision.gameObject.SetActive(false);
+            levelOneAudioScript.PlayFuelSFX();
         }
 
         if (collision.CompareTag("End"))
         {
-            // TODO: Player Won the Game
+            gameOver = true;
+            levelOneAudioScript.Stop();
+            levelOneAudioScript.PlayWinSFX();
+
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            gameOver = true;
+            levelOneAudioScript.PlayHitSFX();
         }
     }
 

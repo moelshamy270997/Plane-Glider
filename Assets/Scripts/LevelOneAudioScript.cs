@@ -21,7 +21,7 @@ public class LevelOneAudioScript : MonoBehaviour
         audioSource.PlayOneShot(jumpSFX, 0.2f);
     }
 
-    public void PlayHitFX()
+    public void PlayHitSFX()
     {
         audioSource.PlayOneShot(hitSFX, 0.2f);
     }
@@ -39,5 +39,10 @@ public class LevelOneAudioScript : MonoBehaviour
     public void PlayWinSFX()
     {
         audioSource.PlayOneShot(winSFX, 0.2f);
+    }
+
+    public void Stop()
+    {
+        audioSource.Stop();
     }
 }

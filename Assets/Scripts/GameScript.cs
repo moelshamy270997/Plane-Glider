@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameScript : MonoBehaviour
     List<GameObject> groundObjects = new List<GameObject>();
     GameObject[] obstaclesObjects;
     GameObject[] FuelObjects;
+    [SerializeField] GameObject endObj;
+
 
     float speed = 2f;
 
@@ -32,11 +35,11 @@ public class GameScript : MonoBehaviour
         GroundMovement();
         ObstacleMovement();
         FuelMovement();
+        EndMovement();
     }
 
     void GameSetUp()
     {
-        // Create the Game Ground dynamically
         for (int i = 0; i < 8; i++)
         {
             GameObject obj = Instantiate(groundPrefab, new Vector3(807f * groundObjects.Count, -200f, -10f), Quaternion.identity);
@@ -61,5 +64,10 @@ public class GameScript : MonoBehaviour
     {
         foreach (GameObject obj in FuelObjects)
             obj.transform.Translate(Vector3.left * speed * Time.deltaTime);
+    }
+
+    void EndMovement()
+    {
+        endObj.transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 }
