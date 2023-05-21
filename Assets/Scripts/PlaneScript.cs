@@ -139,6 +139,10 @@ public class PlaneScript : MonoBehaviour
             gameOver = true;
             GameOverFunction();
         }
+        if (collision.CompareTag("PowerUp"))
+        {
+            // TODO: Power UP
+        }
     }
 
     void GameOverFunction()
